@@ -8,6 +8,7 @@
 #include <QUdpSocket>
 #include <QHostAddress>
 #include <QNetworkDatagram>
+#include <QBuffer>
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +34,7 @@ private:
     QAudioInput *m_audioInput;
     QUdpSocket *m_udpSocket;
     QIODevice *m_audioInputDevice;
+    QBuffer *m_audioBuffer;
 };
 
 #endif // MAINWINDOW_H
