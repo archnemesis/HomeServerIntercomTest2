@@ -91,6 +91,9 @@
       <property name="value">
        <number>24</number>
       </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
     <item>
@@ -104,6 +107,9 @@
      <widget class="QProgressBar" name="networkBufferProgress">
       <property name="value">
        <number>24</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
       </property>
      </widget>
     </item>

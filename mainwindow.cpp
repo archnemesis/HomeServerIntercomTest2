@@ -51,6 +51,11 @@ void MainWindow::on_connectButton_clicked()
     connect(m_audioInput, &QAudioInput::stateChanged, this, &MainWindow::on_audioInput_stateChanged);
     connect(m_audioInput, &QAudioInput::notify, this, &MainWindow::on_audioInput_notify);
 
+    qDebug() << "Buffer Size:" << m_audioInput->bufferSize();
+    qDebug() << "Notify Interval:" << m_audioInput->notifyInterval();
+    ui->audioBufferProgress->setMaximum(m_audioInput->bufferSize());
+    ui->audioBufferProgress->setValue(0);
+
     m_audioInputDevice = m_audioInput->start();
 }
 
@@ -68,6 +73,9 @@ void MainWindow::on_audioInput_stateChanged(QAudio::State state)
         break;
     case QAudio::IdleState:
         qDebug("QAudio now idle");
+        if (m_audioInput->error() != QAudio::NoError) {
+            qDebug() << "QAudio Error " << m_audioInput->error();
+        }
         break;
     default:
         qDebug("Other state...");
@@ -89,6 +97,7 @@ void MainWindow::on_udpSocket_readyRead()
 
 void MainWindow::on_DisconnectButton_clicked()
 {
+    m_audioInput->stop();
     m_udpSocket->close();
 
     ui->hostAddress->setEnabled(true);
