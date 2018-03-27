@@ -56,9 +56,7 @@ void MainWindow::on_connectButton_clicked()
     ui->audioBufferProgress->setMaximum(m_audioInput->bufferSize());
     ui->audioBufferProgress->setValue(0);
 
-    m_audioBuffer = new QBuffer();
-    m_audioBuffer->open(QIODevice::ReadWrite);
-    m_audioInput->start(m_audioBuffer);
+    m_audioInputDevice = m_audioInput->start();
 }
 
 void MainWindow::on_audioInput_stateChanged(QAudio::State state)
@@ -78,6 +76,9 @@ void MainWindow::on_audioInput_stateChanged(QAudio::State state)
         if (m_audioInput->error() != QAudio::NoError) {
             qDebug() << "QAudio Error " << m_audioInput->error();
         }
+        else {
+            m_audioInput->resume();
+        }
         break;
     default:
         qDebug("Other state...");
@@ -87,9 +88,14 @@ void MainWindow::on_audioInput_stateChanged(QAudio::State state)
 
 void MainWindow::on_audioInput_notify()
 {
-    QByteArray buf = m_audioBuffer->read(FRAME_SIZE);
+    QByteArray buf = m_audioInputDevice->read(FRAME_SIZE);
     m_udpSocket->writeDatagram(buf, QHostAddress("10.1.1.141"), 2050);
-    ui->audioBufferProgress->setValue(m_audioBuffer->bytesAvailable());
+
+    int bytesReady = m_audioInput->bytesReady();
+    if (bytesReady > ui->audioBufferProgress->maximum()) {
+        ui->audioBufferProgress->setMaximum(bytesReady);
+    }
+    ui->audioBufferProgress->setValue(m_audioInput->bytesReady());
 }
 
 void MainWindow::on_udpSocket_readyRead()
@@ -102,6 +108,7 @@ void MainWindow::on_DisconnectButton_clicked()
     m_audioInput->stop();
     m_udpSocket->close();
 
+    ui->audioBufferProgress->setValue(0);
     ui->hostAddress->setEnabled(true);
     ui->hostPort->setEnabled(true);
     ui->connectButton->setEnabled(true);
