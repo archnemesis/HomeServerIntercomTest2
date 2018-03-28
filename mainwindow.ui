@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>307</width>
-    <height>393</height>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Intercom Test 2</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -82,12 +82,29 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>Audio Buffer</string>
+       <string>Input Buffer</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QProgressBar" name="audioBufferProgress">
+      <property name="value">
+       <number>24</number>
+      </property>
+      <property name="textVisible">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Output Buffer</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="outputBufferProgress">
       <property name="value">
        <number>24</number>
       </property>
