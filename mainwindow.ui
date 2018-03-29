@@ -31,7 +31,11 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="hostAddress"/>
+          <widget class="QLineEdit" name="hostAddress">
+           <property name="text">
+            <string>10.1.1.141</string>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_2">
@@ -41,7 +45,11 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="hostPort"/>
+          <widget class="QLineEdit" name="hostPort">
+           <property name="text">
+            <string>2050</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

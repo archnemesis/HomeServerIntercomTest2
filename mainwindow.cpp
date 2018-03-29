@@ -24,7 +24,7 @@ void MainWindow::on_connectButton_clicked()
     int port = 2050;
 
     m_udpSocket = new QUdpSocket(this);
-    m_udpSocket->bind(port);
+    m_udpSocket->bind(QHostAddress::AnyIPv4, port);
     connect(m_udpSocket, &QUdpSocket::readyRead, this, &MainWindow::on_udpSocket_readyRead);
 
     ui->hostAddress->setEnabled(false);
@@ -68,12 +68,18 @@ void MainWindow::on_connectButton_clicked()
     ui->networkBufferProgress->setMaximum(FRAME_SIZE * 10);
     ui->networkBufferProgress->setValue(0);
 
+    qDebug() << "Output:";
+    qDebug() << "Buffer Size:" << m_audioOutput->bufferSize();
+    qDebug() << "Notify Interval:" << m_audioOutput->notifyInterval();
+
+    qDebug() << "Input:";
     qDebug() << "Buffer Size:" << m_audioInput->bufferSize();
     qDebug() << "Notify Interval:" << m_audioInput->notifyInterval();
     ui->audioBufferProgress->setMaximum(m_audioInput->bufferSize());
     ui->audioBufferProgress->setValue(0);
 
     m_audioInputDevice = m_audioInput->start();
+    m_audioOutputDevice = m_audioOutput->start();
 }
 
 void MainWindow::on_audioOutput_stateChanged(QAudio::State state)
@@ -106,8 +112,9 @@ void MainWindow::on_audioOutput_notify()
         m_audioOutputDevice->write(m_buffer.data(), towrite);
         m_buffer.remove(0, towrite);
         ui->outputBufferProgress->setValue(m_audioOutput->bufferSize() - m_audioOutput->bytesFree());
-        ui->networkBufferProgress->setValue(m_buffer.size());
     }
+
+    qDebug() << "+";
 
     m_bufferMutex.unlock();
 }
@@ -153,20 +160,34 @@ void MainWindow::on_audioInput_notify()
 
 void MainWindow::on_udpSocket_readyRead()
 {
-    QNetworkDatagram dg = m_udpSocket->receiveDatagram(FRAME_SIZE);
-    m_bufferMutex.lock();
-    m_buffer.append(dg.data());
-    m_bufferMutex.unlock();
+    while (m_udpSocket->hasPendingDatagrams()) {
+        QNetworkDatagram dg = m_udpSocket->receiveDatagram(FRAME_SIZE);
+        m_bufferMutex.lock();
+        m_buffer.append(dg.data());
+        ui->networkBufferProgress->setValue(m_buffer.size());
+        qDebug("Size: %d", m_buffer.size());
+        m_bufferMutex.unlock();
+    }
 
     if (m_buffer.count() > (FRAME_SIZE * 10) && m_audioOutput->state() == QAudio::IdleState) {
+        qDebug() << ".";
         m_audioOutput->resume();
+        on_audioOutput_notify();
     }
 }
 
 void MainWindow::on_DisconnectButton_clicked()
 {
     m_audioInput->stop();
+    m_audioInput->deleteLater();
+    m_audioOutput->stop();
+    m_audioOutput->deleteLater();
     m_udpSocket->close();
+    m_udpSocket->deleteLater();
+
+    m_audioInput = nullptr;
+    m_audioOutput = nullptr;
+    m_udpSocket = nullptr;
 
     ui->audioBufferProgress->setValue(0);
     ui->hostAddress->setEnabled(true);
