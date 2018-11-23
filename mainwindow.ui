@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>307</width>
-    <height>432</height>
+    <width>451</width>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Intercom Test 2</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
@@ -22,18 +22,18 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QFormLayout" name="formLayout">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>CA Certificate</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
             <string>Address</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="hostAddress">
-           <property name="text">
-            <string>10.1.1.141</string>
            </property>
           </widget>
          </item>
@@ -44,10 +44,33 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="cacertPath"/>
+         </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="hostPort">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
-            <string>2050</string>
+            <string>2005</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="certBrowseButton">
+           <property name="text">
+            <string>Browse...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QLineEdit" name="hostAddress">
+           <property name="text">
+            <string>homeserver.robingingras.com</string>
            </property>
           </widget>
          </item>
@@ -55,6 +78,19 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item>
           <widget class="QPushButton" name="connectButton">
            <property name="text">
@@ -75,67 +111,218 @@
      </widget>
     </item>
     <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Input Buffer</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="audioBufferProgress">
-      <property name="value">
-       <number>24</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Output Buffer</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="outputBufferProgress">
-      <property name="value">
-       <number>24</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Network Buffer</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="networkBufferProgress">
-      <property name="value">
-       <number>24</number>
-      </property>
-      <property name="textVisible">
-       <bool>false</bool>
-      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Configuration</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Request</string>
+          </property>
+          <layout class="QFormLayout" name="formLayout_2">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Hardware ID</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="hwidEdit">
+             <property name="text">
+              <string>00:90:E1:00:00:00</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Hardware Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="hwNameEdit">
+             <property name="text">
+              <string>HomeServerTest</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Received Configuration Profile</string>
+          </property>
+          <layout class="QFormLayout" name="formLayout_3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Display Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="configDisplayName"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Description</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="configDescription"/>
+           </item>
+           <item row="2" column="1">
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Intercom</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1">
+        <item>
+         <widget class="QListWidget" name="contactList"/>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QPushButton" name="talkButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Talk</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="endButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>End</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Input Buffer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="audioBufferProgress">
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="textVisible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Output Buffer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="outputBufferProgress">
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="textVisible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Network Buffer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="networkBufferProgress">
+              <property name="value">
+               <number>0</number>
+              </property>
+              <property name="textVisible">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Event Log</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QPlainTextEdit" name="logText"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

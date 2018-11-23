@@ -25,10 +25,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    messageparser.cpp \
+    command.c \
+    configuration_payload.c \
+    intercom_channel_accept.c \
+    intercom_channel_create.c \
+    intercom_channel_request.c \
+    ping.c \
+    request_error.c \
+    intercom_directory_listing.c
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    messageparser.h \
+    command.h \
+    configuration_payload.h \
+    intercom_channel_accept.h \
+    intercom_channel_create.h \
+    intercom_channel_request.h \
+    message.h \
+    ping.h \
+    request_error.h \
+    intercom_directory_listing.h
 
 FORMS += \
         mainwindow.ui
